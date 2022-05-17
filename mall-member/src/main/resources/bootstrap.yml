@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: mall-member
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yaml
+        group: dev
+        namespace: 2578fef4-c8af-4f9c-a1a0-e1597899b360
+        extension-configs:
+          - data-id: mall-member.yaml
+            group: dev
+            refresh: true

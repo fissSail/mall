@@ -1,0 +1,214 @@
+<html xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+    <meta charset="utf-8"/>
+    <title>谷粒商城</title>
+    <link rel="shortcut icon" href="/static/index/favicon/title_logo.ico">
+    <script src="/static/order/closeaccount/js/jquery-3.1.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/order/closeaccount/css/JD2.css"/>
+</head>
+
+<body>
+<!--顶部-->
+<header>
+    <!--头部-->
+    <div class="header_head">
+        <div class="header_head_box">
+            <ul>
+                <span th:if="${session.loginUser == null}">
+                    <li>
+                    <a href="http://auth.mall.com/login.html">你好，请登录</a>
+                    </li>
+                    <li>
+                        <a href="http://auth.mall.com/register.html" class="li_2">免费注册</a>
+                    </li>
+                    <span>|</span>
+                </span>
+                <li th:if="${session.loginUser != null}">
+                    <a href="">[[${session.loginUser.nickname}]]</a>
+                </li>
+                <li>
+                    <a href="http://member.mall.com/memberOrderList.html">我的订单</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+
+<div>
+    <!--logo图片-->
+    <div class="top-1">
+        <a href="http://mall.com">
+            <img src="/static/order/closeaccount/img/logo1.jpg" class="img1"/>
+        </a>
+        <span>结算页</span>
+        <!--右侧绿色-->
+        <img src="/static/order/closeaccount/img/08.png" class="img2"/>
+        <p class="p1">填写并核对订单信息</p>
+    </div>
+
+    <!--主体部分-->
+    <div class="section">
+        <!--收货人信息-->
+        <div class="top-2">
+            <span>收货人信息</span>
+            <span>新增收货地址</span>
+        </div>
+
+        <!--地址-->
+        <div class="top-3 addr" th:each="addressVo : ${item.addressVos}">
+            <p th:attr="addrId=${addressVo.getId()}" th:class="${addressVo.defaultStatus == 1 ? 'xz' : ''}">
+                [[${addressVo.name}]]</p>
+            <span th:class="${addressVo.defaultStatus == 1 ? 'spanxz' : ''}"> [[${addressVo.province}]]  [[${addressVo.detailAddress}]]  [[${addressVo.phone}]]</span>
+        </div>
+        <p class="p2">更多地址</p>
+        <div class="hh1"/>
+    </div>
+
+    <!--支付方式-->
+    <h4 class="h4">支付方式</h4>
+
+    <div class="top-6">
+        <p>货到付款</p>
+        <p><span>惠</span>在线支付</p>
+    </div>
+    <div class="hh1"></div>
+    <!--送货清单-->
+    <h4 class="h4" style="margin-top: 5px;">送货清单</h4>
+    <div class="top_1">
+        <div class="to_left">
+            <h5><span class="peisong">配送方式</span><span class="dui"><img
+                    src="/static/order/closeaccount/img/i_03.png"/> 对应商品</span>
+            </h5>
+            <div class="box">
+                快递
+            </div>
+            <p class="biao">
+                <span class="til">标 准 达 ：</span>
+                <span class="con">预计 12月16日[今天] 15:00-19:00 送达</span>
+                <a href="#">修改</a>
+            </p>
+            <div class="updata-1">
+                <img src="/static/order/closeaccount/img/im_06.png"/>
+                <span>京准达 标准达</span>
+                <span style="color: black;"> 配送服务全面升级</span>
+            </div>
+            <div class="hh1"></div>
+        </div>
+        <div class="to_right">
+
+            <!--图片-->
+            <div class="yun1" th:each="orderItemvo : ${item.orderItemVos}" style="border-bottom: 1px solid #E3E4E5">
+                <img th:src="${orderItemvo.image}" class="yun"/>
+                <div class="mi">
+                    <p>[[${orderItemvo.title}]]</p>
+                    <p style="color: red;text-align: end;
+                    margin-right: 10px;"> ￥ [[${#numbers.formatDecimal(orderItemvo.price,3,2)}]]</p>
+                    <p>数量：[[${orderItemvo.count}]] 、
+                        <span style="float: right;margin-right: 10px;"
+                              th:text="${item.hasStock.get(orderItemvo.getSkuId()) ? '有货' : '无货'}">有货</span>
+                    </p>
+                    <p>0.095kg</p>
+                    <p class="tui-1"><img src="/static/order/closeaccount/img/i_07.png"/>支持7天无理由退货</p>
+                </div>
+            </div>
+            <div class="hh1"></div>
+        </div>
+    </div>
+    <div class="bto">
+        <div class="hh3"></div>
+        <h4 class="clear">使用优惠/礼品卡/抵用</h4>
+        <ul>
+            <li class="red">优惠卡</li>
+        </ul>
+    </div>
+    <div class="xia">
+        <div class="qian">
+            <p class="qian_y">
+                <span>[[${item.count}]]</span>
+                <span>件商品，总商品金额：</span>
+                <span class="rmb">￥[[${#numbers.formatDecimal(item.total,3,2)}]]</span>
+            </p>
+            <p class="qian_y">
+                <span>运费：</span>
+                <span class="rmb" id="freight">￥0.00</span>
+            </p>
+        </div>
+        <div class="yfze">
+            <p class="yfze_a"><span class="z">应付总额：</span><span class="hq" id="total">￥[[${#numbers.formatDecimal(item.payPrice,3,2)}]]</span>
+            </p>
+            <p class="yfze_b addrShow">寄送至： 收货人：</p>
+        </div>
+        <form action="/submit/order" method="post">
+            <input id="addrId" name="addrId" type="hidden"/>
+            <input id="payPrice" name="payPrice" type="hidden"/>
+            <input id="token" name="token" type="hidden" th:value="${item.getToken()}"/>
+            <button class="tijiao" type="submit">提交订单</button>
+        </form>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('.header-right li:nth-of-type(6)').hover(function () {
+            $('.header-r-11').css('display', 'block')
+        }, function () {
+            $('.header-r-11').css('display', 'none')
+        })
+        $('.header-right li:nth-of-type(12)').hover(function () {
+            $('.header-r-2').css('display', 'block')
+        }, function () {
+            $('.header-r-2').css('display', 'none')
+        })
+        $('.header-right li:nth-of-type(14)').hover(function () {
+            $('.header-r-3').css('display', 'block')
+        }, function () {
+            $('.header-r-3').css('display', 'none')
+        })
+        $('.header-l-2').hover(function () {
+            $('.header-l-d').css('display', 'block')
+        }, function () {
+            $('.header-l-d').css('display', 'none')
+        })
+        $('.header-r-4').hover(function () {
+            $('.h-r-1').css('display', 'block')
+        }, function () {
+            $('.h-r-1').css('display', 'none')
+        })
+
+        $(".addrShow").text("寄送至：" + $(".spanxz").text() + "  收货人：" + $(".xz").text())
+
+        let addrId = $(".xz").attr("addrId");
+        $("#addrId").val(addrId);
+        $.get("http://mall.com/api/ware/wareinfo/freight/" + addrId, function ({data}) {
+            $("#freight").text("￥" + data.freight);
+            let total = [[${#numbers.formatDecimal(item.payPrice,3,2)}]]
+            let totalPrice = (total * 1) + (data.freight * 1);
+            $("#total").text("￥" + totalPrice);
+            $("#payPrice").val(totalPrice);
+        })
+    })
+
+    $(".addr").click(function () {
+        $(".addr").children("p").removeClass("xz");
+        $(this).children("p").addClass("xz");
+
+        let addrId = $(this).children("p").attr("addrId");
+        $("#addrId").val(addrId);
+        $(".addrShow").text("寄送至：" + $(this).children("span").text() + "  收货人：" + $(this).children("p").text())
+
+        $.get("http://mall.com/api/ware/wareinfo/freight/" + addrId, function ({data}) {
+            $("#freight").text("￥" + data.freight);
+            let total = [[${#numbers.formatDecimal(item.payPrice,3,2)}]]
+            let totalPrice = (total * 1) + (data.freight * 1);
+
+            $("#total").text("￥" + totalPrice);
+            $("#payPrice").val(totalPrice);
+        })
+    })
+
+
+</script>
+</body>
+
+</html>

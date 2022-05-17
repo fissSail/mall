@@ -1,0 +1,6 @@
+server:
+  port: 88
+spring:
+  main:
+    allow-circular-references: true
+

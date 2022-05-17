@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>购物车</title>
+    <link rel="shortcut icon" href="/static/index/favicon/title_logo.ico">
+    <link rel="stylesheet" href="/static/cart/css/One_bdyStyle.css">
+    <link rel="stylesheet" href="/static/cart/css/index.css">
+    <link rel="stylesheet" href="/static/cart/css/One_mainFoot.css">
+    <link rel="stylesheet" href="/static/cart/css/font-awesome-4.7.0/css/font-awesome.css"/>
+</head>
+<body>
+<header>
+    <a name="mao1">
+        <div class="header">
+
+            <ul class="header-left">
+                <li>
+
+                    <a href="http://mall.com">首页</a>
+                </li>
+
+            </ul>
+            <ul class="header-right">
+                <span th:if="${session.loginUser == null}">
+                    <li>
+                    <a href="http://auth.mall.com/login.html">你好，请登录</a>
+                    </li>
+                    <li>
+                        <a href="http://auth.mall.com/register.html" class="li_2">免费注册</a>
+                    </li>
+                </span>
+                <li th:if="${session.loginUser != null}">
+                    <a href="">[[${session.loginUser.nickname}]]</a>
+                </li>
+                <li class="spacer"></li>
+                <li><a href="http://member.mall.com/memberOrderList.htmll">我的订单</a></li>
+            </ul>
+            <div style="clear: both;"></div>
+        </div>
+
+    </a>
+</header>
+
+
+<div class="one_search">
+
+    <div class="one_sousuo">
+        <div class="one_search_top">
+            <div class="one_top_left">
+                <a href="http://mall.com" class="one_left_logo"><img src="/static/cart/img/logo1.jpg"></a>
+                <a href="#" class="one_left_link">购物车</a>
+            </div>
+            <div class="one_top_right">
+                <input type="text" class="one_right_txt" id="searchText" placeholder="" onfocus="this.placeholder=''"
+                       onblur="this.placeholder='' ">
+                <input type="button" value="搜索" class="one_right_btn" onclick="search()">
+            </div>
+        </div>
+        <div class="one_search_load" th:if="${session.loginUser == null}">
+            <img src="/static/cart/img/shop_07.jpg" class="one_load_wraing">
+            <span>您还没有登录！登录后购物车的商品将保存到您账号中</span>
+            <a href="#"><input type="button" onclick="login()" value="立即登录" class="one_load_btn"></a>
+        </div>
+    </div>
+</div>
+<div class="One_BdyShop">
+    <div class="OneBdy_box">
+        <div class="One_tabTop">
+            <div class="One_Topleft">
+                <span>全部商品 </span>
+
+            </div>
+
+        </div>
+        <div class="One_ShopTop">
+            <ul>
+                <li><!--<input type="checkbox" class="allCheck">全选--></li>
+                <li>商品</li>
+                <li>单价</li>
+                <li>数量</li>
+                <li>小计</li>
+                <li>操作</li>
+            </ul>
+        </div>
+
+        <div class="One_ShopCon">
+            <ul>
+                <li th:each="cartItem:${item.getCartItemVos()}">
+                    <div></div>
+                    <div th:attr="style=${cartItem.check ? 'background: rgb(255, 244, 232);' : ''}">
+                        <ol>
+                            <li><input type="checkbox" class="check isChecked" th:value="${cartItem.skuId}"
+                                       th:checked="${cartItem.check}"/></li>
+                            <li>
+                                <dt><img th:src="${cartItem.image}" src="/static/cart/img/shop1.jpg" alt=""></dt>
+                                <dd style="display: contents;">
+                                    <p>
+                                        <a th:href="'http://item.mall.com/'+${cartItem.skuId}+'.html'"
+                                           th:text="${cartItem.title}">TCL 55A950C 55英寸32核</a>
+                                    <div class="p-extra" th:each="attrVal : ${cartItem.getSkuAttr()}">
+                                        <span class="txt">[[${attrVal}]]</span>
+                                    </div>
+                                    </p>
+                                </dd>
+                            </li>
+                            <li>
+                                <p class="dj" th:text="'￥'+${#numbers.formatDecimal(cartItem.price,3,2)}">4599.00</p>
+                            </li>
+                            <li>
+                                <p th:attr="skuId=${cartItem.skuId}">
+                                    <span class="countOpsBtn">-</span>
+                                    <span class="countOpsNum" th:text="${cartItem.count}">5</span>
+                                    <span class="countOpsBtn">+</span>
+                                </p>
+                            </li>
+                            <li style="font-weight:bold">
+                                <p class="zj" th:text="'￥'+${#numbers.formatDecimal(cartItem.totalPrice,3,2)}">
+                                    ￥22995.00</p>
+                            </li>
+                            <li>
+                                <p th:attr="skuId=${cartItem.skuId}">删除</p>
+                            </li>
+                        </ol>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="One_ShopFootBuy fix1" style="display:flex;justify-content: space-between;">
+            <div>优惠:￥[[${#numbers.formatDecimal(item.reduce,1,2)}]]</div>
+            <div style="margin-left: 600px;">总价:<span style="color:#e64346;font-weight:bold;font-size:16px;" class="fnt">￥[[${#numbers.formatDecimal(item.totalAmount,3,2)}]]</span></div>
+            <div><button onclick="toTrade()" type="button">去结算</button></div>
+        </div>
+    </div>
+</div>
+
+<div class="One_isDel">
+    <p>
+        <span>删除</span><span><img src="/static/cart/img/错误.png" alt=""></span>
+    </p>
+    <div>
+        <dl>
+            <dt><img src="/static/cart/img/感叹三角形 (2).png" alt=""></dt>
+            <dd>
+                <li>删除商品？</li>
+                <li>您可以选择移到关注，或删除商品。</li>
+            </dd>
+        </dl>
+    </div>
+    <div>
+        <button type="button" id="deleteCart">删除</button>
+        <button type="button">取消</button>
+    </div>
+</div>
+<div class="One_moveGzIfNull">
+    <p>
+        <span>删除</span><span><img src="/static/cart/img/错误.png" alt=""></span>
+    </p>
+    <dl>
+        <dt><img src="/static/cart/img/感叹三角形 (2).png" alt=""></dt>
+        <dd>请至少选中一件商品！</dd>
+    </dl>
+</div>
+<div class="One_moveMyGz">
+    <p>
+        <span>删除</span><span><img src="/static/cart/img/错误.png" alt=""></span>
+    </p>
+    <div>
+        <dl>
+            <dt><img src="/static/cart/img/感叹三角形 (2).png" alt=""></dt>
+            <dd>
+                <li>移到关注</li>
+                <li>移动后选中商品将不再购物车中显示</li>
+            </dd>
+        </dl>
+    </div>
+    <div>
+        <button type="button">确定</button>
+        <button type="button">取消</button>
+    </div>
+</div>
+<div class="One_clearShop">
+    <p>
+        <span>提示</span><span><img src="/static/cart/img/错误.png" alt=""></span>
+    </p>
+    <dl>
+        <dt><img src="/static/cart/img/感叹三角形 (2).png" alt=""></dt>
+        <dd>没有下柜商品!</dd>
+    </dl>
+</div>
+<!--底部-->
+
+<div class="one_footer">
+
+</div>
+</body>
+<script src="/static/cart/js/jquery-3.1.1.min.js" charset="utf-8"></script>
+<script src="/static/cart/js/index.js" charset="utf-8"></script>
+<script type="text/javascript">
+    function toTrade() {
+        window.location.href = "http://order.mall.com/toTrade";
+    }
+
+    function login() {
+        window.location.href = "http://auth.mall.com/login.html";
+    }
+
+    $(".isChecked").click(function () {
+        var skuId = $(this).attr("value");
+        var check = $(this).prop("checked");
+        var param = "check=" + check + "&" + "skuId=" + skuId;
+        window.location.href = "http://cart.mall.com/checkCart?" + param
+    })
+
+    function search() {
+        var keyword = $("#searchText").val()
+        window.location.href = "http://search.mall.com?keyword=" + keyword;
+    }
+
+    $(".countOpsBtn").click(function () {
+        let skuId = $(this).parent("p").attr("skuId");
+        window.location.href = "http://cart.mall.com/countCart?skuId=" + skuId + "&count=1";
+    })
+
+    $("#deleteCart").click(function () {
+        let skuId = $(this).attr("skuId");
+        window.location.href = "http://cart.mall.com/deleteCart?skuId=" + skuId;
+    })
+</script>
+</html>

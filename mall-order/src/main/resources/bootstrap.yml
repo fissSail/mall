@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: mall-order
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yaml
+        group: dev
+        namespace: 35aa663c-e052-4334-8b8f-384c57912086
+        extension-configs:
+          - data-id: mall-order.yaml
+            group: dev
+            refresh: true

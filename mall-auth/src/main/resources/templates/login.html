@@ -1,0 +1,188 @@
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>谷粒商城-欢迎登录</title>
+    <link rel="shortcut icon" href="/static/index/favicon/title_logo.ico">
+    <link rel="stylesheet" type="text/css" href="/static/login/JD_sass/login.css"/>
+    <script src="/static/login/JD_js/jquery-3.1.1.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<!--顶部logo-->
+<div class="w">
+    <div id="logo">
+        <a href="http://mall.com/">
+            <img src="/static/login/JD_img/logo.jpg" alt="谷粒商城" width="170" height="60">
+        </a>
+        <b></b>
+    </div>
+</div>
+
+
+<div id="content">
+    <div class="tips-wrapper">
+        <div class="tips-inner">
+            <div class="cont-wrapper"><i class="icon-tips"></i>
+                <p>依据《网络安全法》，为保障您的账户安全和正常使用，请尽快完成手机号验证！ 新版
+                    <a href="https://about.jd.com/privacy/" class="black" target="_blank">《京东隐私政策》</a>已上线，将更有利于保护您的个人隐私。
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="login-wrap">
+        <div class="w">
+            <div class="login-form">
+                <div class="tips-wrapper">
+                    <div class="tips-inner">
+                        <div class="cont-wrapper"><i class="icon-tips"></i>
+                            <p>京东不会以任何理由要求您转账汇款，谨防诈骗。</p></div>
+                    </div>
+                </div>
+                <div class="login-tab login-tab-l">
+                    <a href="javascript:void(0)" class="checked">扫码登录</a>
+                </div>
+                <div class="login-tab login-tab-r">
+                    <a href="javascript:void(0)">账户登录</a>
+                </div>
+                <div class="login-box" style="display: none;">
+                    <div class="mt tab-h">
+                    </div>
+                    <div class="msg-wrap">
+                        <div class="msg-error hide"><b></b></div>
+                    </div>
+                    <div class="mc">
+                        <div class="form">
+                            <form id="formlogin" action="/login" method="post">
+                                <div class="item item-fore1">
+                                    <label for="userName" class="login-label name-label"></label>
+                                    <input id="userName" type="text" class="itxt" name="userName" tabindex="1"
+                                           _input="true" autocomplete="off" value="" placeholder="邮箱/用户名/登录手机">
+                                    <span class="clear-btn"></span>
+                                </div>
+
+                                <div id="entry" class="item item-fore2">
+                                    <label class="login-label pwd-label" for="password"></label>
+                                    <input type="password" id="password" name="password" class="itxt itxt-error"
+                                           tabindex="2" autocomplete="off" _input="true" placeholder="密码">
+                                    <span class="clear-btn"></span>
+                                </div>
+
+                                <div class="item item-fore4" style="margin-bottom: 50px;">
+                                    <div class="safe">
+                                        <span></span>
+                                        <span class="forget-pw-safe">
+											<a href="//passport.jd.com/uc/links?tag=safe" class=""
+                                               target="_blank">忘记密码</a>
+										</span>
+                                    </div>
+                                </div>
+
+                                <div class="item item-fore5">
+                                    <div class="login-btn">
+                                        <button type="submit" id="submit_btn" class="btn-img btn-entry">登&nbsp;&nbsp;&nbsp;&nbsp;录</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qrcode-login" style="display: block;">
+                    <div class="mc">
+                        <div class="qrcode-error-2016" style="left: 0px; display: none;">
+                            <div class="qrcode-error-mask">
+                            </div>
+                            <p class="err-cont">二维码已失效</p>
+                            <a href="javascript:void(0)" class="refresh-btn">刷新</a>
+                        </div>
+                        <div class="qrcode-main">
+                            <div class="qrcode-img" style="left: 64px;display: block;">
+                                <img src="//qr.m.jd.com/show?appid=133&amp;size=147&amp;t=1643436443238" alt="">
+                                <div class="qrcode-error02 hide" id="J-qrcoderror"><a href="#none"> <span
+                                        class="error-icon"></span>
+                                    <div class="txt">网络开小差咯<span class="ml10">刷新二维码</span></div>
+                                </a></div>
+                            </div>
+                            <div class="qrcode-help" style="display: none;"></div>
+                        </div>
+                        <div class="qrcode-panel">
+                            <ul>
+                                <li class="fore1">
+                                    <span>打开</span>
+                                    <a href="/uc/links?tag=apps" target="_blank">
+                                        <span class="red">手机京东</span></a>
+                                </li>
+                                <li>扫描二维码</li>
+                            </ul>
+                        </div>
+                        <div class="coagent qr-coagent" id="qrCoagent">
+                            <ul>
+                                <li><b></b><em>免输入</em></li>
+                                <li><b class="faster"></b><em>更快&nbsp;</em></li>
+                                <li><b class="more-safe"></b><em>更安全</em></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="coagent" id="kbCoagent">
+                    <ul>
+                        <li>
+                            <b></b>
+                            <a href="https://github.com/login/oauth/authorize?client_id=226ca02d6a4c7045a1da&redirect_uri=http://auth.mall.com/oauth/github/success">
+                                <img src="/static/login/JD_img/github-mark.svg" width="20" height="20" alt="GitHub mark">
+                            </a>
+                            <span class="line">|</span>
+                        </li>
+                        <li>
+                            <b></b>
+                            <a href="https://gitee.com/oauth/authorize?client_id=73147ff00ec5153ec13dbcea6b86b464e1e10c208e00b329ae2f37bf3bab856b&redirect_uri=http://auth.mall.com/oauth/gitee/success&response_type=code">
+                                <img src="/static/login/JD_img/gitee.png" width="20" height="20" alt="Gitee mark">
+                            </a>
+                            <span class="line">|</span>
+                        </li>
+                        <!--<li>
+                            <a href="javascript:void(0)"
+                               onclick="window.location='//qq.jd.com/new/wx/login.action'+window.location.search;return false;"
+                               class="pdl"><b
+                                    class="weixin-icon"></b><span>微信</span></a>
+                        </li>-->
+                        <li class="extra-r">
+                            <div>
+                                <div class="regist-link">
+                                    <a href="http://auth.mall.com/register.html" target="_blank"><b></b>立即注册</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="login-banner">
+            <div class="w">
+                <div id="banner-bg" class="i-inner">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script type="text/javascript">
+    $(".login-tab").click(function () {
+        $(".login-tab").children("a").removeClass("checked");
+
+        let th = $(this);
+
+        th.children("a").addClass("checked");
+
+        if (th.hasClass("login-tab-l")) {
+            $(".login-box").hide();
+            $(".qrcode-login").show();
+        } else {
+            $(".login-box").show();
+            $(".qrcode-login").hide();
+        }
+    })
+</script>
+</html>

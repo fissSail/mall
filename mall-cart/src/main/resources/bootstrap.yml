@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: mall-cart
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yaml
+        group: dev
+        namespace: e900d7ef-868f-420b-a69a-1a503ec6ff2f
+        #Load multiple configuration files
+        extension-configs:
+          - data-id: mall-cart.yaml
+            group: dev
+            refresh: true

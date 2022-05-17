@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: mall-thirdParty
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yaml
+        group: dev
+        namespace: a95c0c10-6293-40cd-aef6-346d549d6d38
+        extension-configs:
+          - data-id: mall-thirdParty.yaml
+            group: dev
+            refresh: true

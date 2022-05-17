@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: mall-auth
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yaml
+        group: dev
+        namespace: 56a5d44e-0697-4715-aaea-9cae86e1355d
+        #Load multiple configuration files
+        extension-configs:
+          - data-id: mall-auth.yaml
+            group: dev
+            refresh: true

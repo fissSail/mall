@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: mall-seckill
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yaml
+        group: dev
+        namespace: 0dfc1192-726b-40a5-8f4d-0e094f687b62
+        extension-configs:
+          - data-id: mall-seckill.yaml
+            group: dev
+            refresh: true

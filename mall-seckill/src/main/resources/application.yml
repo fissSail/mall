@@ -1,0 +1,6 @@
+server:
+  port: 9700
+spring:
+  main:
+    allow-circular-references: true
+

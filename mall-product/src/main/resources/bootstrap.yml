@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: mall-product
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yaml
+        group: dev
+        namespace: 468c1d3f-9802-4bfa-957f-fd92832eb9ab
+        extension-configs:
+          - data-id: mall-product.yaml
+            group: dev
+            refresh: true

@@ -1,0 +1,16 @@
+
+spring:
+  application:
+    name: mall-coupon
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yaml
+        group: dev
+        namespace: edf21433-4322-4e68-b755-e05c85f5348e
+        #Load multiple configuration files
+        extension-configs:
+          - data-id: mall-coupon.yaml
+            group: dev
+            refresh: true
